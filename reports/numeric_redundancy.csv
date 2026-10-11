@@ -1,0 +1,5 @@
+Variable_A,Variable_B,Spearman_Rho
+Lymph,Neut,-0.9123
+Weight,BMI,0.7196
+DM,FBS,0.6438
+HTN,BP,0.6155

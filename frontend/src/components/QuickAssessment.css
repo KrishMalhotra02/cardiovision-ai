@@ -1,0 +1,25 @@
+.cvq-container {background:#f4f8fa;color:#152935;border:1px solid #dce9ed;border-radius:22px;padding:clamp(24px,3vw,48px);font-family:Inter,"DM Sans",system-ui,sans-serif;max-width:1460px;margin:38px auto;box-shadow:0 18px 65px rgba(5,36,57,.06)}
+.cvq-top {display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.cvq-kicker {color:#267887;font-size:11px;letter-spacing:2px;font-weight:750}
+.cvq-mode {border:1px solid #cedde1;padding:7px 12px;border-radius:999px;color:#68828e;font-size:12px}
+.cvq-container h2 {color:#102935;font-size:clamp(30px,4vw,50px);font-weight:700;letter-spacing:-1.7px;margin:25px 0 12px}
+.cvq-intro {max-width:670px;color:#647986;line-height:1.7;font-size:14px;margin:0 0 30px}
+.cvq-grid {display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,.8fr);gap:28px;align-items:stretch}
+.cvq-form {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px}
+.cvq-field {display:flex;flex-direction:column;gap:7px;font-size:12px;color:#546a78;font-weight:600}
+.cvq-field input,.cvq-field select {background:#fff;color:#182f3b;border:1px solid #ccdade;border-radius:9px;min-height:47px;padding:12px;font-size:14px;min-width:0;outline:0}
+.cvq-field input:focus,.cvq-field select:focus {border-color:#19899c;box-shadow:0 0 0 3px rgba(25,137,156,.09)}
+.cvq-submit {grid-column:1/-1;border:0;background:#123f51;color:#fff;padding:16px 20px;min-height:52px;border-radius:10px;font-size:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.cvq-submit:hover:not(:disabled) {background:#0a5369}.cvq-submit:disabled {opacity:.5;cursor:not-allowed}
+.cvq-answer {background:#112c3c;color:#f1f8fa;border-radius:16px;padding:30px;display:flex;flex-direction:column;min-height:360px}
+.cvq-answer .cvq-kicker{color:#84c8ca}.cvq-score {font-size:clamp(65px,7vw,92px);font-weight:660;letter-spacing:-5px;margin:33px 0 4px;line-height:1.1}
+.cvq-score small{font-size:.36em;letter-spacing:0;color:#82c6c6;margin-left:4px}
+.cvq-caption {font-size:13px;color:#a9c0ca}.cvq-meter {height:7px;background:#314b59;border-radius:12px;overflow:hidden;margin:23px 0}
+.cvq-meter>div {height:100%;background:#77c4c3;transition:width .6s ease}
+.cvq-label{color:#a9bec7;font-size:14px}.cvq-label strong{color:#fff}.cvq-note {margin-top:22px;color:#b2c4cb;font-size:11px;line-height:1.7}
+.cvq-waiting {flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;align-items:flex-start}
+.cvq-beat {color:#9ad3d1;font-size:76px;line-height:1}.cvq-waiting strong{font-size:19px}.cvq-waiting p{font-size:13px;color:#9db3bf;line-height:1.6}
+.cvq-foot {border-top:1px solid #325061;margin-top:auto;padding-top:20px;color:#92aeb9;font-size:11px;line-height:1.7}
+.cvq-error {color:#ae3535;background:#fff1ef;border:1px solid #efbdb3;padding:12px;margin:18px 0;border-radius:8px;font-size:13px}
+@media(max-width:860px){.cvq-grid{grid-template-columns:1fr}.cvq-answer{min-height:270px}}
+@media(max-width:490px){.cvq-form{grid-template-columns:1fr}.cvq-container{margin:18px auto}.cvq-score{font-size:62px}}

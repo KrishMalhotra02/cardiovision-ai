@@ -1,0 +1,18 @@
+Feature,MutualInformation,Position
+Typical Chest Pain,0.15996,1
+Atypical,0.08292,2
+Age,0.07732,3
+PR,0.05955,4
+HTN,0.04113,5
+DM,0.03601,6
+Nonanginal,0.03343,7
+BP,0.02897,8
+BMI,0.01302,9
+Function Class,0.00937,10
+Dyspnea,0.00781,11
+Current Smoker,0.00281,12
+Sex,0.00224,13
+EX-Smoker,0.00068,14
+FH,0.00065,15
+Obesity,0.00025,16
+DLP,8e-05,17

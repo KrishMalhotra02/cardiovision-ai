@@ -1,0 +1,101 @@
+Tier,Feature,Times_Selected
+History_only,Age,5
+History_only,DM,5
+History_only,HTN,5
+History_only,Typical Chest Pain,5
+History_only,Atypical,5
+History_only,Nonanginal,5
+History_plus_ECG,Age,5
+History_plus_ECG,DM,5
+History_plus_ECG,HTN,5
+History_plus_ECG,Typical Chest Pain,5
+History_plus_ECG,Atypical,5
+History_plus_ECG,Nonanginal,5
+History_plus_ECG,Q Wave,5
+History_plus_ECG,Tinversion,5
+History_ECG_Echo,Age,5
+History_ECG_Echo,DM,5
+History_ECG_Echo,HTN,5
+History_ECG_Echo,Typical Chest Pain,5
+History_ECG_Echo,Atypical,5
+History_ECG_Echo,Nonanginal,5
+History_ECG_Echo,Q Wave,5
+History_ECG_Echo,Tinversion,5
+History_ECG_Echo,Region RWMA,5
+All_55,Age,5
+All_55,Weight,5
+All_55,Length,5
+All_55,Sex,5
+All_55,BMI,5
+All_55,DM,5
+All_55,HTN,5
+All_55,Current Smoker,5
+All_55,EX-Smoker,5
+All_55,FH,5
+All_55,Obesity,5
+All_55,CRF,5
+All_55,CVA,5
+All_55,Airway disease,5
+All_55,Thyroid Disease,5
+All_55,CHF,5
+All_55,DLP,5
+All_55,BP,5
+All_55,PR,5
+All_55,Edema,5
+All_55,Weak Peripheral Pulse,5
+All_55,Lung rales,5
+All_55,Systolic Murmur,5
+All_55,Diastolic Murmur,5
+All_55,Typical Chest Pain,5
+All_55,Dyspnea,5
+All_55,Function Class,5
+All_55,Atypical,5
+All_55,Nonanginal,5
+All_55,Exertional CP,5
+All_55,LowTH Ang,5
+All_55,Q Wave,5
+All_55,St Elevation,5
+All_55,St Depression,5
+All_55,Tinversion,5
+All_55,LVH,5
+All_55,Poor R Progression,5
+All_55,BBB,5
+All_55,FBS,5
+All_55,CR,5
+All_55,TG,5
+All_55,LDL,5
+All_55,HDL,5
+All_55,BUN,5
+All_55,ESR,5
+All_55,HB,5
+All_55,K,5
+All_55,Na,5
+All_55,WBC,5
+All_55,Lymph,5
+All_55,Neut,5
+All_55,PLT,5
+All_55,EF-TTE,5
+All_55,Region RWMA,5
+All_55,VHD,5
+History_only,BP,4
+History_only,Function Class,4
+History_plus_ECG,BP,4
+History_plus_ECG,St Elevation,4
+History_ECG_Echo,EF-TTE,4
+History_only,BMI,3
+History_only,PR,3
+History_only,Dyspnea,3
+History_plus_ECG,PR,3
+History_plus_ECG,St Depression,3
+History_plus_ECG,BMI,2
+History_plus_ECG,Function Class,2
+History_ECG_Echo,St Elevation,2
+History_ECG_Echo,BP,2
+History_only,Current Smoker,1
+History_only,Sex,1
+History_only,Obesity,1
+History_plus_ECG,Dyspnea,1
+History_plus_ECG,Sex,1
+History_ECG_Echo,BMI,1
+History_ECG_Echo,St Depression,1
+History_ECG_Echo,PR,1

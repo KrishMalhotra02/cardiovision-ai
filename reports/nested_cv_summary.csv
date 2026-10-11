@@ -1,0 +1,5 @@
+Tier,Mean_Fold_AUC,Fold_AUC_SD,Pooled_OOF_AUC,Mean_Recall,Median_Questions
+History_only,0.889,0.0599,0.8843,0.8334,10
+History_plus_ECG,0.9083,0.0317,0.9029,0.847,12
+History_ECG_Echo,0.939,0.0283,0.9358,0.8563,12
+All_55,0.9112,0.0356,0.8955,0.8889,55

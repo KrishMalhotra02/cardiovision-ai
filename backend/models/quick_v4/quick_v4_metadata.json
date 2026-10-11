@@ -1,0 +1,31 @@
+{
+  "model_version": "quick-v4-10-questions",
+  "question_count": 10,
+  "features": [
+    "Age",
+    "Sex",
+    "BMI",
+    "DM",
+    "HTN",
+    "Current Smoker",
+    "Typical Chest Pain",
+    "Atypical",
+    "Nonanginal",
+    "Dyspnea",
+    "BP",
+    "PR"
+  ],
+  "algorithm": "Regularized logistic regression",
+  "selected_by_full_data_cv": {
+    "Regularized logistic regression": 0.8958290151860602,
+    "Conservative random forest": 0.8899888073622684
+  },
+  "nested_out_of_fold_auc": 0.899,
+  "nested_mean_fold_auc": 0.8964,
+  "sample_size": 303,
+  "positive_class": "CAD",
+  "training_positive_records": 216,
+  "negative_records": 87,
+  "raw_feature_count": 12,
+  "note": "All metrics are internal dataset estimates. Final artifact refit on all 303 rows for demo; no external clinical validation or calibration."
+}

@@ -1,0 +1,35 @@
+Algorithm,Feature,CV_Permutation_AUC_Drop
+LogisticRegression,Age,0.05321
+LogisticRegression,Sex,0.00064
+LogisticRegression,BMI,-0.00154
+LogisticRegression,DM,0.03992
+LogisticRegression,HTN,0.01294
+LogisticRegression,BP,-0.00158
+LogisticRegression,PR,0.00948
+LogisticRegression,Current Smoker,0.00197
+LogisticRegression,EX-Smoker,-0.0028
+LogisticRegression,FH,0.01308
+LogisticRegression,DLP,0.00732
+LogisticRegression,Obesity,-0.00222
+LogisticRegression,Typical Chest Pain,0.09734
+LogisticRegression,Dyspnea,0.01415
+LogisticRegression,Atypical,-0.00242
+LogisticRegression,Nonanginal,0.00759
+LogisticRegression,Function Class,0.002
+RandomForest,Age,0.04003
+RandomForest,Sex,-0.00116
+RandomForest,BMI,0.00257
+RandomForest,DM,0.01648
+RandomForest,HTN,0.00648
+RandomForest,BP,-0.00074
+RandomForest,PR,0.00069
+RandomForest,Current Smoker,0.002
+RandomForest,EX-Smoker,-0.0
+RandomForest,FH,0.00245
+RandomForest,DLP,0.00193
+RandomForest,Obesity,-0.00022
+RandomForest,Typical Chest Pain,0.06855
+RandomForest,Dyspnea,0.00342
+RandomForest,Atypical,0.00865
+RandomForest,Nonanginal,0.01003
+RandomForest,Function Class,-0.00264

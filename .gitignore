@@ -1,0 +1,16 @@
+
+# Local environments, caches and backups
+.venv/
+venv/
+**/node_modules/
+**/dist/
+**/__pycache__/
+*.py[cod]
+*.DS_Store
+.env
+.env.*
+!.env.example
+archive/
+*_backup_*/
+*.log
+.pytest_cache/

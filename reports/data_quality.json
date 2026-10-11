@@ -1,0 +1,18 @@
+{
+  "rows": 303,
+  "columns": 59,
+  "features": 55,
+  "target_discordances": [
+    {
+      "Excel_Row": 95,
+      "Cath": "Normal",
+      "LAD": "Stenotic",
+      "LCX": "Normal",
+      "RCA": "Normal"
+    }
+  ],
+  "max_BMI_weight_length_error": 0.0,
+  "constant_features": [
+    "Exertional CP"
+  ]
+}

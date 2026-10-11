@@ -1,0 +1,49 @@
+{
+  "selected_features": [
+    "Age",
+    "BMI",
+    "DM",
+    "HTN",
+    "BP",
+    "PR",
+    "Current Smoker",
+    "Typical Chest Pain",
+    "Dyspnea",
+    "Atypical",
+    "Nonanginal",
+    "Function Class"
+  ],
+  "n_features": 12,
+  "model": "LogisticRegression",
+  "engineered_interactions": true,
+  "inner_cv_auc": 0.8995,
+  "training_records": 303,
+  "positive_label": "CAD",
+  "categorical_options": {
+    "Dyspnea": [
+      "N",
+      "Y"
+    ],
+    "Atypical": [
+      "N",
+      "Y"
+    ],
+    "Nonanginal": [
+      "N",
+      "Y"
+    ]
+  },
+  "numeric_features": [
+    "Age",
+    "BMI",
+    "DM",
+    "HTN",
+    "BP",
+    "PR",
+    "Current Smoker",
+    "Typical Chest Pain",
+    "Function Class"
+  ],
+  "source": "Z-Alizadeh Sani Extension dataset",
+  "cautions": "Research-only. This dataset contains patients evaluated for CAD. Quick model not independently validated for population screening. Model probability calibration not established."
+}

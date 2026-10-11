@@ -1,0 +1,6 @@
+fold,selected_algorithm,inner_auc,outer_auc,outer_balanced_accuracy,outer_recall
+1,Regularized logistic regression,0.912,0.8717,0.8255,0.8864
+2,Regularized logistic regression,0.8801,0.9083,0.803,0.8837
+3,Regularized logistic regression,0.9181,0.9238,0.7752,0.8837
+4,Regularized logistic regression,0.9194,0.9166,0.8536,0.8837
+5,Regularized logistic regression,0.9071,0.8618,0.8297,0.9535
