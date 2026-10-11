@@ -118,3 +118,132 @@ h1,h2,h3,h4{font-family:Manrope,sans-serif;margin:0}p{margin:0}
 .cv-cad-interpretation>strong{font-size:12px;color:#286e5f;display:block;margin-bottom:6px}
 .cv-cad-interpretation p{font-size:11px;line-height:1.7;color:#637f73}
 .cv-cad-interpretation b{color:#276a5f}
+
+
+/* Restored vessel callouts: label cards and SVG connectors MUST be positioned inside their 3D viewer. */
+/* Vessel callouts: projected 3D anchors, click/hover interaction, readable elbow connectors. */
+.cv-heart-labeled { position:absolute; inset:0; }
+.cv-callout-overlay { position:absolute; inset:0; z-index:4; pointer-events:none; overflow:hidden; }
+.cv-callout-layer { position:absolute; inset:0; pointer-events:none; }
+.cv-callout-connectors { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.cv-callout-wire { opacity:.58; transition:opacity .18s,stroke-width .18s; filter:drop-shadow(0 0 2px #0a1a1e); }
+.cv-callout-wire.is-active { opacity:1; filter:drop-shadow(0 0 4px currentColor); }
+.cv-callout-card {
+  --vessel-color:#79dccc;
+  position:absolute; display:flex; flex-direction:column; gap:4px;
+  width:clamp(122px,25%,190px); z-index:2; padding:12px 13px;
+  background:#0b1924ec; color:#eaf6f5;
+  border:1px solid #47616b; border-left:3px solid var(--vessel-color);
+  border-radius:8px; text-align:left; cursor:pointer; pointer-events:auto;
+  box-shadow:0 10px 30px #0005; backdrop-filter:blur(8px);
+  transition:border-color .2s,background .2s,opacity .2s,box-shadow .2s,transform .2s;
+}
+.cv-callout-card:hover,.cv-callout-card:focus-visible,.cv-callout-card.is-active {
+  background:#12313aee; border-color:var(--vessel-color); border-left-color:var(--vessel-color);
+  box-shadow:0 8px 30px #0007,0 0 0 1px #3b605b;
+  transform:translateY(-2px); opacity:1;
+}
+.cv-callout-card.is-muted { opacity:.67; }
+.cv-callout-tag { color:var(--vessel-color); font:800 15px Manrope,sans-serif; letter-spacing:1px; }
+.cv-callout-name { font:500 11px/1.45 Manrope,sans-serif; color:#d4e8e7; }
+.cv-callout-score { font:600 10px/1.4 Manrope,sans-serif; color:#b1d2ca; margin-top:3px; }
+.cv-callout-card--lad { top:24%; left:3%; }
+.cv-callout-card--lcx { top:26%; right:3%; }
+.cv-callout-card--rca { top:62%; right:3%; }
+.cv-heart-labeled--focus .cv-callout-card { width:112px; padding:8px 9px; gap:2px; }
+.cv-heart-labeled--focus .cv-callout-tag { font-size:12px; }
+.cv-heart-labeled--focus .cv-callout-name { font-size:9px; }
+.cv-heart-labeled--focus .cv-callout-score { font-size:9px; }
+.cv-heart-labeled--focus .cv-callout-card--lad { top:20%; left:2%; }
+.cv-heart-labeled--focus .cv-callout-card--lcx { top:18%; right:2%; }
+.cv-heart-labeled--focus .cv-callout-card--rca { top:67%; right:2%; }
+@media (max-width:700px) {
+  .cv-callout-card { width:112px; padding:8px 9px; gap:2px; }
+  .cv-callout-tag { font-size:12px; }
+  .cv-callout-name { font-size:9px; }
+  .cv-callout-score { font-size:9px; }
+  .cv-callout-card--lad { top:20%; left:2%; }
+  .cv-callout-card--lcx { top:20%; right:2%; }
+  .cv-callout-card--rca { top:68%; right:2%; }
+}
+@media (prefers-reduced-motion:reduce) { .cv-callout-card,.cv-callout-wire { transition:none; } }
+
+
+/* Final pass: clear spatial hierarchy, content in previously empty columns. */
+.cv-form-column {display:flex;flex-direction:column;gap:17px;min-width:0}
+.cv-quick-grid {align-items:stretch}
+.cv-result-stack {min-width:0}
+.quick-form-bottom {justify-content:flex-end}
+.quick-form-bottom>.submit-assessment {margin-left:auto}
+.cv-patient-context {border:1px solid #d4e5db;border-radius:12px;background:linear-gradient(165deg,#fafffc 0%,#eff7f2 100%);padding:27px 30px;min-width:0;box-shadow:0 6px 24px #124b3208}
+.cv-patient-context-heading {display:flex;align-items:center;justify-content:space-between;gap:14px;color:#2c8575}
+.cv-patient-context-heading h3 {font:800 clamp(17px,1.7vw,22px)/1.35 Manrope,sans-serif;color:#254e49;margin-top:7px;letter-spacing:-.7px}
+.cv-patient-context-intro {font-size:12px;color:#758d85;line-height:1.7;margin:14px 0 20px}
+.cv-patient-metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.cv-patient-metric {min-width:0;background:#fff;border:1px solid #dce9e2;border-radius:8px;padding:13px 12px;display:flex;flex-direction:column;gap:8px}
+.cv-patient-metric>span {font-size:10px;font-weight:700;color:#749088}
+.cv-patient-metric>strong {font:800 clamp(19px,2vw,26px) Manrope,sans-serif;color:#245f55;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cv-patient-metric>strong small {font:500 9px 'DM Sans',sans-serif;color:#72978c}
+.cv-patient-metric>em {font:500 10px/1.45 'DM Sans',sans-serif;color:#91a69c;font-style:normal}
+.cv-patient-findings {border-top:1px solid #dcebe1;margin-top:22px;padding-top:17px;display:flex;flex-direction:column;gap:14px}
+.cv-patient-findings h4 {font-size:12px;font-weight:800;color:#315c54;margin:0 0 1px}
+.cv-patient-findings>div {display:flex;align-items:flex-start;gap:10px}
+.cv-patient-marker {width:8px;height:8px;background:#7ab8a2;border:2px solid #e8f4ed;border-radius:50%;flex-shrink:0;margin-top:5px;box-shadow:0 0 0 1px #b7d5c7}
+.cv-patient-findings strong {font-size:12px;color:#31655b}
+.cv-patient-findings p {font-size:11px;color:#7b9189;line-height:1.6;margin-top:3px}
+.cv-patient-context-footer {display:flex;gap:10px;justify-content:space-between;align-items:center;border-top:1px solid #dcebe1;margin-top:21px;padding-top:17px;font-size:10px;line-height:1.5;color:#789188}
+.cv-patient-context-footer a {color:#287a6a;font-weight:800;white-space:nowrap}
+/* Results row follows content heights, without the right-hand interpretation card setting giant empty min-height on its neighbours. */
+.cv-analytics-grid {grid-template-columns:minmax(0,1.02fr) minmax(0,1.16fr) minmax(0,.99fr);align-items:start}
+.cv-analytics-grid>.cv-insight-card {min-height:0}
+.cv-profile-intro {font-size:11px;color:#789089;line-height:1.65;margin:0 0 20px}
+.cv-full-score-chart {gap:9px;margin-top:0}
+.cv-score-row,.cv-score-row--fixed {display:flex;flex-direction:column;align-items:stretch;gap:7px;width:100%;padding:10px 12px;border:1px solid #e6eee9;border-radius:8px;background:#fff;text-align:left;transition:background .2s,border-color .2s}
+.cv-score-row.active {background:#f0f8f4;border-color:#b9d9c9}
+.cv-score-row:hover:not(.cv-score-row--fixed) {border-color:#8eb9ab}
+.cv-score-row-head {display:flex;align-items:center;justify-content:space-between;gap:6px}
+.cv-score-row-head>span {font-size:12px;font-weight:800;color:#3b625a}
+.cv-score-row-head>strong {font-size:15px;font-weight:800;color:#286a60;font-variant-numeric:tabular-nums}
+.cv-score-row>small {font-size:10px;line-height:1.4;color:#839991;letter-spacing:0}
+.cv-score-rail {width:100%;height:9px}
+.cv-profile-result-summary {background:#f6faf7;border:1px solid #e2eee6;padding:15px;border-radius:8px;margin-top:17px}
+.cv-profile-result-summary strong {color:#376c61;font-size:12px}
+.cv-profile-result-summary p {font-size:11px;line-height:1.7;color:#748d83;margin:8px 0 12px}
+.cv-profile-result-heading {display:flex;align-items:center;gap:8px;color:#3f8979}
+.cv-profile-result-mini {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cv-profile-result-mini>div {border:1px solid #dfece3;background:#fff;border-radius:6px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;gap:5px}
+.cv-profile-result-mini b {font-size:10px;color:#46736a}
+.cv-profile-result-mini span {font-size:10px;color:#49796c;text-align:right}
+.cv-profile-result-summary a {display:inline-flex;margin-top:12px;font-size:10px;color:#2d786a;font-weight:800}
+.cv-interpretation-panel {padding:14px 15px;margin:16px 0;background:#f5faf7}
+.cv-interpretation-panel>p.cv-interpretation-summary {font-size:11px;line-height:1.75;color:#5b796e}
+.cv-driver-highlight {margin:12px 0 0;padding-top:13px;gap:10px}
+.cv-driver-mini-list {display:flex;flex-direction:column;gap:7px}
+.cv-driver-mini-list>div {display:flex;justify-content:space-between;gap:10px;align-items:center}
+.cv-driver-mini-list span {color:#466b60;font-size:11px;text-transform:none;letter-spacing:0;font-weight:600}
+.cv-driver-mini-list b {font-size:10px;white-space:nowrap}
+.cv-driver-mini-list b.is-up {color:#b4775e}
+.cv-driver-mini-list b.is-down {color:#478d80}
+.cv-context-chips {border-top:1px solid #e1eee7;margin-top:13px;padding-top:12px}
+.cv-context-chips>span {font-size:10px;letter-spacing:.5px;font-weight:800;color:#728d83}
+.cv-context-chips>div {display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.cv-context-chips em {background:#fff;border:1px solid #dcebe3;border-radius:4px;padding:6px 8px;font-size:10px;color:#568274;font-style:normal}
+.cv-interpretation-panel .cv-interpretation-footnote {font-size:10px;color:#82978d;line-height:1.6;border-top:1px solid #e1eee7;margin-top:14px;padding-top:11px}
+.cv-interpretation-footnote a {color:#287669;text-decoration:underline;text-underline-offset:3px}
+.cv-selected-report .cv-vessel-score {margin-top:14px}
+.cv-mini-heart {height:335px}
+/* Position all callout buttons inside the actual WebGL scene, not relative to the page or grid. */
+.cv-heart-labeled {position:absolute;inset:0;width:100%;height:100%;isolation:isolate}
+.cv-callout-overlay {position:absolute;inset:0;overflow:hidden;z-index:4;pointer-events:none}
+.cv-callout-layer,.cv-callout-connectors {position:absolute;inset:0;width:100%;height:100%}
+.cv-callout-card {max-width:190px;white-space:normal;overflow-wrap:normal;font-family:Manrope,sans-serif}
+.cv-callout-card span {display:block}
+.cv-heart-labeled--focus .cv-callout-card {max-width:122px}
+.cv-heart-labeled--focus .cv-callout-card--lad {left:2%;top:17%}
+.cv-heart-labeled--focus .cv-callout-card--lcx {right:2%;top:17%}
+.cv-heart-labeled--focus .cv-callout-card--rca {right:2%;top:68%}
+.cv-mini-heart .cv-callout-card .cv-callout-score {font-size:9px}
+@media(max-width:1360px) { .cv-analytics-grid {grid-template-columns:repeat(2,minmax(0,1fr))} .cv-analytics-grid>.cv-selected-report {grid-column:1/-1} }
+@media(max-width:920px) { .cv-quick-grid {grid-template-columns:1fr} }
+@media(max-width:740px) { .cv-analytics-grid {grid-template-columns:1fr} .cv-analytics-grid>.cv-selected-report {grid-column:auto} .cv-patient-context {padding:23px 20px} }
+@media(max-width:520px) { .cv-patient-metrics {grid-template-columns:1fr 1fr} .cv-patient-metric:last-child {grid-column:span 2} .cv-patient-context-footer {flex-wrap:wrap} .cv-patient-context {padding:22px 18px} .cv-mini-heart {height:300px} .cv-heart-labeled--focus .cv-callout-card {width:100px} .cv-heart-labeled--focus .cv-callout-card .cv-callout-name {display:none} }

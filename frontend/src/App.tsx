@@ -30,17 +30,33 @@ const DISPLAY_FEATURE: Record<string,string> = {
   "Typical Chest Pain":"Typical chest pain", "Atypical":"Atypical chest pain", "Nonanginal":"Non-anginal chest pain",
 };
 
-function VesselInterpretation({target,result,explanation,auc}:{target:Vessel,result:NonNullable<QuickOutcome["predictions"]>[Target],explanation?:Explanation,auc?:number}) {
-  const pct=(result.positive_probability*100).toFixed(1);
-  const positive=result.predicted_label==="Stenotic";
-  const lead=explanation?.drivers?.filter(d=>Math.abs(d.contribution) > 0.00001).slice(0,2).map(d=>DISPLAY_FEATURE[d.feature]??d.feature)??[];
+function VesselInterpretation({
+  target, result, explanation, inputs,
+}: {
+  target: Vessel;
+  result: NonNullable<QuickOutcome["predictions"]>[Target];
+  explanation?: Explanation;
+  inputs?: Record<string, string | number> | null;
+}) {
+  const positive = result.predicted_label === "Stenotic";
+  const drivers = explanation?.drivers?.filter(d => Math.abs(d.contribution) > .00001).slice(0, 3) ?? [];
+  const reports: string[] = [];
+  if (inputs?.ChestPainType === "typical") reports.push("Typical chest-pain pattern selected");
+  if (inputs?.ChestPainType === "atypical") reports.push("Atypical chest-pain pattern selected");
+  if (inputs?.Dyspnea === "Y") reports.push("Shortness of breath reported");
+  if (Number(inputs?.HTN) === 1) reports.push("Hypertension history reported");
+  if (Number(inputs?.DM) === 1) reports.push("Diabetes history reported");
+  if (Number(inputs?.["Current Smoker"]) === 1) reports.push("Current smoking reported");
   return <div className="cv-interpretation-panel">
-    <div className="cv-interpretation-heading"><Sparkles size={16}/><strong>Clinical interpretation · model context</strong></div>
-    <p>The <strong>{target}</strong> reduced-input model assigns a <strong>{pct}% positive-class score</strong>, producing a <strong>{positive?'Stenotic':'Normal'} model classification</strong> at its illustrative 50% decision threshold. This is not evidence that this artery is {positive?'actually narrowed':'free of disease'}.</p>
-    {lead.length>0&&<div className="cv-driver-highlight"><span>Notable inputs for this prediction</span><strong>{lead.join(" · ")}</strong><small>Contributions reflect model behavior compared with dataset reference values, not clinical causes.</small></div>}
-    {auc!==undefined&&<div className="cv-validation-note"><Activity size={15}/><p><strong>Internal hold-out ROC-AUC: {auc.toFixed(2)}</strong><br/>Preliminary discrimination on 61 records. No external clinical validation or reliable probability calibration.</p></div>}
-    <p className="cv-interpretation-caution">Clinical assessment of coronary disease requires professional evaluation and, when indicated, appropriate testing. This prototype cannot confirm or rule out stenosis.</p>
-  </div>
+    <div className="cv-interpretation-heading"><Sparkles size={17}/><strong>Personalized model interpretation</strong></div>
+    <p className="cv-interpretation-summary">The <strong>{target} model</strong> classified these answers as <strong>{positive ? "Stenotic" : "Normal"}</strong> within the research dataset. Its positive-class score is <strong>{(result.positive_probability*100).toFixed(1)}%</strong>.</p>
+    {drivers.length>0 && <div className="cv-driver-highlight">
+      <span>Inputs most influential to this output</span>
+      <div className="cv-driver-mini-list">{drivers.map(d => <div key={d.feature}><span>{DISPLAY_FEATURE[d.feature]??d.feature}</span><b className={d.contribution>=0?"is-up":"is-down"}>{d.contribution>=0?"↑":"↓"} Model score</b></div>)}</div>
+    </div>}
+    {reports.length>0 && <div className="cv-context-chips"><span>Reported clinical context</span><div>{reports.slice(0,3).map(x=><em key={x}>{x}</em>)}</div></div>}
+    <p className="cv-interpretation-footnote">An exploratory pattern-based estimate, not an image-confirmed blockage or diagnosis. <a href="#technical-appendix">Evaluation details ↗</a></p>
+  </div>;
 }
 
 export default function App() {
@@ -73,7 +89,6 @@ export default function App() {
     Object.fromEntries(TARGETS.map(t=>[t,result.predictions![t].positive_probability])) as Record<string,number>:undefined;
   const selectedResult=result?.predictions?.[selected];
   const selectedExplanation=result?.explanations?.[selected];
-  const selectedAuc=result?.vessel_validation?.[selected]?.roc_auc;
   return <div className="site-shell">
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="CardioVision home"><HeartLogo/><span>cardiovision<span className="wordmark-accent">.ai</span></span></a>
@@ -97,12 +112,12 @@ export default function App() {
           <div className="stage-caption"><span>{result?"Four model estimates shown · illustrative coronary positions":"Anatomical reference · select an artery to explore"}</span><span>Drag · zoom · select</span></div>
         </div>
       </section>
-      <QuickAssessment apiBase={API} demoSignal={demoSignal} onResult={(r,inputs)=>{setResult(r);setQuickInputs(inputs)}}/>
+      <QuickAssessment apiBase={API} demoSignal={demoSignal} onResult={(r,inputs)=>{setResult(r);setQuickInputs(inputs)}} onReset={()=>{setResult(null);setQuickInputs(null)}}/>
       <section className="full-section" id="full">
         <div className="editorial-heading"><div className="editorial-label"><span className="editorial-index">02</span> CORONARY EXPLORER</div><div className="editorial-heading-grid"><h2>Four signals. One clearer picture.</h2><p>One 10-question assessment now generates separate CAD, LAD, LCX and RCA model scores, with vessel-level explanations and interactive anatomy.</p></div></div>
         <div className="cv-ready-banner"><div className="cv-ready-icon">{result?<CheckCircle2 size={23}/>:<HeartPulse size={23}/>}</div><div><strong>{result?"Your four-part coronary profile is ready":"Your four-part coronary profile will appear here"}</strong><span>{result?"Select an artery to explore its classification, model drivers and reference anatomy.":"No additional form needed. Complete the 10 questions above to populate every card."}</span></div><a href="#quick">{result?"Run another assessment":"Start 10-question assessment"}<ArrowUpRight size={15}/></a></div>
         <div className="cv-analytics-grid">
-          <FullComparison scores={scores} selected={selected} onChoose={setSelected}/>
+          <FullComparison scores={scores} predictions={result?.predictions} selected={selected} onChoose={setSelected}/>
           <section className="cv-insight-card cv-focused-anatomy"><div className="cv-insight-head"><div><span className="cv-eyebrow">SELECTED VESSEL · INTERACTIVE 3D</span><h4>{selected} — {NAMES[selected]}</h4></div><button className="cv-focus-reset" type="button" onClick={()=>setResetKey(k=>k+1)} aria-label="Reset heart camera"><RotateCcw size={17}/></button></div>
             <div className="cv-mini-heart"><HeartScene focusMode selected={selected} probabilities={probabilities} onSelect={setSelected} resetKey={resetKey}/></div>
             <p className="cv-focus-description">{TERRITORIES[selected].anatomy} {TERRITORIES[selected].context}</p>
@@ -113,9 +128,9 @@ export default function App() {
               <div className="cv-vessel-score">{(selectedResult.positive_probability*100).toFixed(1)}<small>%</small></div>
               <p className="cv-vessel-label">Model-estimated probability of the <strong>Stenotic</strong> dataset label</p>
               <span className="cv-status-pill">Model classification: {selectedResult.predicted_label}</span>
-              <VesselInterpretation target={selected} result={selectedResult} explanation={selectedExplanation} auc={selectedAuc}/>
-              <div className="cv-selected-divider"/><h5>What {selected} supplies</h5><p>{TERRITORIES[selected].context}</p>
-              <small>MODEL: {selectedResult.model_type} · 10-question classifier</small>
+              <VesselInterpretation target={selected} result={selectedResult} explanation={selectedExplanation} inputs={quickInputs}/>
+              <div className="cv-selected-divider"/><h5>Vessel anatomy</h5><p>{TERRITORIES[selected].context}</p>
+              <small>MODEL: {selectedResult.model_type}</small>
             </>:<>
               <div className="cv-pre-result-mark"><Activity size={29}/><span>4 ready-to-run models</span></div>
               <h5>One form. No further clinical data.</h5><p>After completing the ten questions, this panel displays the selected vessel's score, classification, important inputs and validation context.</p>

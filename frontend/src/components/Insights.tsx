@@ -103,16 +103,31 @@ export function ClinicalSnapshot({data}:{data:Record<string,string|number>|null}
   </div></div>;
 }
 
-export function FullComparison({scores,selected,onChoose}:{scores?:Record<string,number>,selected:string,onChoose:(v:"LAD"|"LCX"|"RCA")=>void}) {
+export function FullComparison({scores,predictions,selected,onChoose}:{
+  scores?:Record<string,number>;
+  predictions?:Record<"CAD"|"LAD"|"LCX"|"RCA",{predicted_label:string}>;
+  selected:string;
+  onChoose:(v:"LAD"|"LCX"|"RCA")=>void;
+}) {
   const names = ["CAD", "LAD", "LCX", "RCA"] as const;
-  return <section className="cv-insight-card"><div className="cv-insight-head"><div><span className="cv-eyebrow">FOUR INDEPENDENT MODELS</span><h4>Coronary prediction profile</h4></div><BarChart3 size={18}/></div>
+  const readable = (v:typeof names[number]) => v==="CAD"?"Overall CAD":v==="LAD"?"Anterior descending":v==="LCX"?"Left circumflex":"Right coronary";
+  return <section className="cv-insight-card cv-profile-card">
+    <div className="cv-insight-head"><div><span className="cv-eyebrow">FOUR INDEPENDENT MODELS</span><h4>Coronary prediction profile</h4></div><BarChart3 size={18}/></div>
+    <p className="cv-profile-intro">The same answers are evaluated by four separate classifiers. Choose an artery to inspect its model context.</p>
     <div className="cv-full-score-chart">{names.map(n=>{
       const p = scores?.[n];
-      return <button key={n} type="button" className={selected===n?"cv-score-row active":"cv-score-row"} onClick={()=>{if(n!=="CAD")onChoose(n)}} aria-label={`${n} model estimate ${p===undefined?'not available':(p*100).toFixed(1)+' percent'}`}>
-        <span>{n}</span><div className="cv-score-rail"><i style={{width:p===undefined?"0%":`${Math.min(100,100*p)}%`}}/></div><strong>{p===undefined?"—":`${(p*100).toFixed(1)}%`}</strong>
-      </button>;
+      const row = <><div className="cv-score-row-head"><span>{n}</span><strong>{p===undefined?"—":`${(p*100).toFixed(1)}%`}</strong></div><div className="cv-score-rail"><i style={{width:p===undefined?"0%":`${Math.min(100,100*p)}%`}}/></div><small>{readable(n)}{predictions?.[n]?` · ${predictions[n].predicted_label} class`:""}</small></>;
+      return n==="CAD"
+        ? <div key={n} className="cv-score-row cv-score-row--fixed">{row}</div>
+        : <button key={n} type="button" className={selected===n?"cv-score-row active":"cv-score-row"} onClick={()=>onChoose(n)} aria-pressed={selected===n} aria-label={`Select ${n}; model score ${p===undefined?'not available':(p*100).toFixed(1)+' percent'}`}>{row}</button>;
     })}</div>
-    <p className="cv-caption">Each classifier is independently trained. These probabilities are not measured stenosis percentages and should not be compared as clinical severity scores. Select an artery to inspect its 3D overlay and explanation.</p>
+    {scores && <div className="cv-profile-result-summary">
+      <div className="cv-profile-result-heading"><Activity size={16}/><strong>How to read these results</strong></div>
+      <p>A 50% model decision threshold assigns a dataset class; these bars are not percentages of vessel obstruction.</p>
+      <div className="cv-profile-result-mini">{names.map(n=><div key={n}><b>{n}</b><span>{predictions?.[n]?.predicted_label??"Not available"}</span></div>)}</div>
+      <a href="#technical-appendix">See validation &amp; model limitations →</a>
+    </div>}
+    {!scores&&<div className="cv-profile-result-summary"><strong>Four independent estimates in one assessment</strong><p>Complete the patient questionnaire to populate this profile and unlock personalized explanations.</p></div>}
   </section>;
 }
 
