@@ -22,7 +22,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
-router = APIRouter(prefix="/api/care", tags=["Care workspace (research demo)"])
+router = APIRouter(prefix="/api/care", tags=["Connected care"])
 DB_PATH = Path(os.getenv("CARDIO_CARE_DB_PATH", str(Path(__file__).resolve().parent / "care_data" / "care.sqlite3")))
 UPLOAD_DIR = Path(os.getenv("CARDIO_CARE_UPLOAD_DIR", str(DB_PATH.parent / "documents")))
 TOKEN_SECONDS = 12 * 3600
@@ -144,7 +144,6 @@ class Signup(BaseModel):
     password: str = Field(min_length=12, max_length=128)
     display_name: str = Field(min_length=2, max_length=80)
     role: str
-    doctor_invite: str = ''
 
 
 class Login(BaseModel):
@@ -159,12 +158,9 @@ def signup(body: Signup):
         problem(422, 'Enter a valid email address')
     if body.role not in ('patient','doctor'):
         problem(422, 'Choose patient or doctor')
-    if body.role == 'doctor':
-        configured = os.getenv('CARDIO_DOCTOR_INVITE', '')
-        if not configured:
-            problem(503, 'Clinician registration is disabled until administrator approval is configured')
-        if not hmac.compare_digest(configured, body.doctor_invite):
-            problem(403, 'Valid clinician onboarding invitation required')
+    # Demo clinician profiles may be created without an administrator invitation.
+    # They are self-declared; registration does not verify medical credentials.
+    # Clinical data access still requires an explicit patient-generated share code.
     uid = uuid4().hex
     try:
         with db() as con:
@@ -195,7 +191,7 @@ def logout(user=Depends(token_user), authorization: str | None = Header(default=
 
 @router.get('/me')
 def me(user=Depends(token_user)):
-    return {'user': user, 'mode': 'prototype; use synthetic or consented non-clinical test data only'}
+    return {'user': user, 'mode': 'preview', 'data_notice': 'Use sample records only. Clinician accounts are unverified.'}
 
 
 @router.post('/share-invite')
@@ -206,7 +202,7 @@ def share_invite(user=Depends(token_user)):
     with db() as con:
         con.execute('INSERT INTO share_invites VALUES(?,?,?,NULL)', (digest(invite),user['id'],expiry))
         audit(con,user['id'],user['id'],'share_invite_created')
-    return {'share_code':invite,'expires_in_minutes':30, 'message':'Share this once with your selected approved clinician only.'}
+    return {'share_code':invite,'expires_in_minutes':30, 'message':'Share this code only with the person you intend to connect.'}
 
 
 class Redeem(BaseModel):

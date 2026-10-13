@@ -51,7 +51,7 @@ function VesselInterpretation({
   if (Number(inputs?.["Current Smoker"]) === 1) reports.push("Current smoking reported");
   return <div className="cv-interpretation-panel">
     <div className="cv-interpretation-heading"><Sparkles size={17}/><strong>Personalized model interpretation</strong></div>
-    <p className="cv-interpretation-summary">The <strong>{target} model</strong> classified these answers as <strong>{positive ? "Stenotic" : "Normal"}</strong> within the research dataset. Its positive-class score is <strong>{(result.positive_probability*100).toFixed(1)}%</strong>.</p>
+    <p className="cv-interpretation-summary">The <strong>{target} model</strong> classified these answers as <strong>{positive ? "Stenotic" : "Normal"}</strong> using its training-data labels. Its positive-class score is <strong>{(result.positive_probability*100).toFixed(1)}%</strong>.</p>
     {drivers.length>0 && <div className="cv-driver-highlight">
       <span>Inputs most influential to this output</span>
       <div className="cv-driver-mini-list">{drivers.map(d => <div key={d.feature}><span>{DISPLAY_FEATURE[d.feature]??d.feature}</span><b className={d.contribution>=0?"is-up":"is-down"}>{d.contribution>=0?"↑":"↓"} Model score</b></div>)}</div>
@@ -105,7 +105,7 @@ function CardioVisionSite() {
           <p className="hero-description">Ten focused questions. Four independent model estimates. One interactive view of the heart and coronary circulation.</p>
           <div className="hero-buttons"><a className="button-primary" href="#quick">Begin assessment <ArrowUpRight size={18}/></a>
             <button className="button-secondary" onClick={()=>{setDemoSignal(n=>n+1);document.getElementById("quick")?.scrollIntoView({behavior:"smooth"})}}>Prefill example <ArrowRight size={17}/></button></div>
-          <div className="hero-smallprint">CAD · LAD · LCX · RCA · research predictions</div>
+          <div className="hero-smallprint">CAD · LAD · LCX · RCA · AI model estimates</div>
         </div>
         <div className="anatomy-stage" id="anatomy">
           <div className="stage-topline"><span>CARDIAC ANATOMY</span><span>DRAG TO ROTATE</span></div>

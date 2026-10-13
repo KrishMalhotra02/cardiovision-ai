@@ -56,7 +56,8 @@ def test_consent_assessment_docs_and_revoke(tmp_path,monkeypatch):
     assert c.get(f'/api/care/documents/{doc_id}/download',headers=dh).status_code==403
 
 
-def test_doctor_onboarding_denied_without_admin_secret(tmp_path,monkeypatch):
+def test_doctor_demo_signup_without_admin_secret(tmp_path,monkeypatch):
     c=client(tmp_path,monkeypatch)
-    r=c.post('/api/care/signup',json={'email':'impostor@test.example','password':'FakeLongPassword!2026','role':'doctor','display_name':'Unauthorized','doctor_invite':'incorrect'})
-    assert r.status_code==403
+    monkeypatch.delenv('CARDIO_DOCTOR_INVITE', raising=False)
+    r=c.post('/api/care/signup',json={'email':'doctor2@test.example','password':'FakeLongPassword!2026','role':'doctor','display_name':'Sample Clinician'})
+    assert r.status_code==201, r.text

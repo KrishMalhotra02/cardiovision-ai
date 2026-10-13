@@ -131,4 +131,4 @@ export function FullComparison({scores,predictions,selected,onChoose}:{
   </section>;
 }
 
-export function ScopeHint(){return <p className="cv-caption cv-scope-hint"><Info size={14}/> Research model estimates are not a diagnostic test. For severe or new chest pain or breathlessness, seek urgent medical evaluation rather than relying on this tool. <a href="#methods">How the models work <ArrowUpRight size={12}/></a></p>}
+export function ScopeHint(){return <p className="cv-caption cv-scope-hint"><Info size={14}/> Prediction estimates are not a diagnostic test. For severe or new chest pain or breathlessness, seek urgent medical evaluation rather than relying on this tool. <a href="#methods">How the models work <ArrowUpRight size={12}/></a></p>}
