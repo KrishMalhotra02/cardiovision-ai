@@ -9,6 +9,8 @@ import type { Explanation } from "./components/Insights";
 import QuickAssessment from "./components/QuickAssessment";
 import type { QuickOutcome } from "./components/QuickAssessment";
 import type { Vessel } from "./components/HeartScene";
+import CarePortal from "./components/CarePortal";
+import "./care-portal.css";
 import "./App.css";
 
 const API = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") || "http://127.0.0.1:8000";
@@ -59,7 +61,7 @@ function VesselInterpretation({
   </div>;
 }
 
-export default function App() {
+function CardioVisionSite() {
   const [selected,setSelected]=useState<Vessel>("LAD");
   const [result,setResult]=useState<QuickOutcome|null>(null);
   const [quickInputs,setQuickInputs]=useState<Record<string,string|number>|null>(null);
@@ -92,7 +94,7 @@ export default function App() {
   return <div className="site-shell">
     <header className="site-header">
       <a className="wordmark" href="#top" aria-label="CardioVision home"><HeartLogo/><span>cardiovision<span className="wordmark-accent">.ai</span></span></a>
-      <nav className="header-links" aria-label="Primary"><a href="#quick">10-question assessment</a><a href="#full">Coronary explorer</a><a href="#discovery">Heart notes</a></nav>
+      <nav className="header-links" aria-label="Primary"><a href="#quick">10-question assessment</a><a href="#full">Coronary explorer</a><a href="#discovery">Heart notes</a><a href="/portal">Patient &amp; doctor login</a></nav>
       <button className="header-action" onClick={()=>document.getElementById("quick")?.scrollIntoView({behavior:"smooth"})}>Start an assessment <ArrowUpRight size={16}/></button>
     </header>
     <main id="top">
@@ -150,4 +152,8 @@ export default function App() {
     </main>
     <footer className="site-footer"><a className="footer-brand" href="#top"><HeartLogo/> cardiovision.ai</a><p>Cardiovascular intelligence with visible limits. <a href="#technical-appendix">Evaluation &amp; intended use</a></p><span>© 2026 CardioVision</span></footer>
   </div>;
+}
+
+export default function App() {
+  return window.location.pathname.startsWith("/portal") ? <CarePortal apiBase={API} /> : <CardioVisionSite />;
 }

@@ -1,16 +1,35 @@
-
-# Local environments, caches and backups
+# Python
 .venv/
 venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# React
 **/node_modules/
 **/dist/
-**/__pycache__/
-*.py[cod]
-*.DS_Store
+
+# Sensitive environment files
 .env
 .env.*
 !.env.example
+
+# Local backups
 archive/
-*_backup_*/
+backend_backup_*/
+ml_backup_*/
+frontend/src_backup_*/
+frontend/src_before_upgrade/
+frontend/src_before_*/
+frontend/src_backup*/
+frontend/src_backup_before_*/
+
+# OS and temporary files
+.DS_Store
 *.log
-.pytest_cache/
+
+# Original downloaded archive
+data/raw/*.zip
+
+backend/care_data/
+.cardiovision-care-backups/

@@ -295,3 +295,7 @@ app.include_router(quick_router)
 # CardioVision V4 analytics endpoints
 from backend.analytics_api import router as analytics_router
 app.include_router(analytics_router)
+
+# Optional connected-care research/demo workspace (no model changes)
+from backend.care_api import router as care_router
+app.include_router(care_router)
